@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>與小鹿對話</title>
+</head>
+<body>
+  <!-- 新增登入按鈕 -->
+  <button id="loginBtn">登入（測試）</button>
+  <div id="chatWindow" style="border:1px solid #ccc;height:300px;overflow:auto;margin-top:10px"></div>
+  <textarea id="input" style="width:100%;height:80px"></textarea>
+  <button id="sendBtn">送出</button>
+
+  <script>
+    const loginBtn = document.getElementById('loginBtn');
+    const sendBtn = document.getElementById('sendBtn');
+    const input = document.getElementById('input');
+    const chatWindow = document.getElementById('chatWindow');
+
+    // 模擬登入
+    async function login() {
+      try {
+        const res = await fetch('http://localhost:3000/api/login', {
+          method: 'POST',
+          credentials: 'include',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ userId: '1234' })
+        });
+        const data = await res.json();
+        if (data.ok) {
+          alert('登入成功！現在為個人化模式');
+        } else {
+          alert('登入失敗：' + JSON.stringify(data));
+        }
+      } catch (e) {
+        console.error('登入失敗', e);
+        alert('登入失敗');
+      }
+    }
+
+    async function sendMessage() {
+      const text = input.value.trim();
+      if (!text) return;
+      chatWindow.innerHTML += `<p><b>我：</b>${text}</p>`;
+      input.value = '';
+      try {
+        const res = await fetch('http://localhost:3000/api/chat', {
+          method: 'POST',
+          credentials: 'include',               // 攜帶 session cookie
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ message: text })
+        });
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        const { reply, error } = await res.json();
+        if (error) throw new Error(error);
+        chatWindow.innerHTML += `<p><b>小鹿：</b>${reply}</p>`;
+        chatWindow.scrollTop = chatWindow.scrollHeight;
+      } catch (e) {
+        console.error(e);
+        chatWindow.innerHTML += `<p style="color:red"><b>錯誤：</b>${e.message}</p>`;
+      }
+    }
+
+    loginBtn.addEventListener('click', login);
+    sendBtn.addEventListener('click', sendMessage);
+    input.addEventListener('keydown', e => {
+      if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        sendMessage();
+      }
+    });
+  </script>
+</body>
+</html>

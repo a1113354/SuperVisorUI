@@ -1,0 +1,134 @@
+/* sidebar.css：全局样式 */
+* { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, sans-serif; }
+body { display: flex; min-height: 100vh; background: #e3faf3; }
+aside {
+  width: 200px;
+  background: #27c197;
+  color: #fff;
+  padding: 20px;
+  position: relative;
+}
+aside h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+aside nav a {
+  display: block;
+  color: #fff;
+  text-decoration: none;
+  padding: 10px 12px;
+  margin-bottom: 6px;
+  border-radius: 4px;
+}
+aside nav a.active,
+aside nav a:hover {
+  background: #1aa37f;
+}
+aside .btn-login {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  right: 20px;
+  display: block;
+  text-align: center;
+  background: #fff;
+  color: #27c197;
+  text-decoration: none;
+  padding: 10px;
+  border-radius: 6px;
+}
+
+/* 主区域 */
+main {
+  flex: 1;
+  padding: 30px;
+  overflow: auto;
+}
+
+/* 通用卡片 */
+.card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+.card h3, .card h2 {
+  margin-bottom: 12px;
+}
+
+/* 任務時間軸 */
+.month-nav {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+.month-nav button {
+  background: #27c197;
+  color: #fff;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.timeline {
+  display: grid;
+  gap: 4px;
+  align-items: center;
+  overflow-x: auto;
+}
+.timeline-header {
+  display: contents;
+}
+.timeline-header div {
+  text-align: center;
+  font-weight: bold;
+  padding: 4px 0;
+}
+.task {
+  border-radius: 5px;
+  padding: 6px 0;
+  text-align: center;
+  color: #fff;
+  font-size: 12px;
+}
+.violation { background: #e74c3c; }
+.inspect   { background: #3498db; }
+.tax       { background: #f1c40f; }
+
+.chat-window {
+  max-height: 400px;
+  overflow-y: auto;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  margin-bottom: 10px;
+  background: #fff;
+}
+.message.user {
+  text-align: right;
+  margin: 8px 0;
+}
+.message.assistant {
+  text-align: left;
+  margin: 8px 0;
+}
+.chat-form textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  resize: vertical;
+}
+.chat-form button {
+  margin-top: 6px;
+  padding: 6px 12px;
+  background: #27c197;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
